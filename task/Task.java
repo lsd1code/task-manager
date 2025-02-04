@@ -16,22 +16,10 @@ public class Task {
     private LocalDate dueDate;
     private boolean isCompleted;
 
-    public Task(@NonNull String description, LocalDate dueDate) {
+    public Task(@NonNull String description, LocalDate dueDate, String id) {
         this.description = description;
         this.dueDate = dueDate;
         this.isCompleted = false;
-        this.id = this.genId();
-    }
-
-    private String genId() {
-        var stringBuilder = new StringBuilder();
-        var length = 5;
-
-        for(int i = 0; i < length; i++) {
-            var randomDigit = (int) (Math.random() * 10);
-            stringBuilder.append(randomDigit);
-        }
-
-        return stringBuilder.toString();
+        this.id = id;
     }
 }
