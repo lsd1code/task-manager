@@ -42,6 +42,10 @@ public class TaskManager {
         return dataStore.removeIf(task -> task.getId().equalsIgnoreCase(taskId));
     }
 
+    public boolean contains(String taskId) {
+        return dataStore.stream().anyMatch(t -> t.getId().equalsIgnoreCase(taskId));
+    }
+
     private String genId() {
         var stringBuilder = new StringBuilder();
         var length = 5;

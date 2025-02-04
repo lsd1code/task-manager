@@ -16,7 +16,7 @@ public class Task {
     private LocalDate dueDate;
     private boolean isCompleted;
 
-    public Task(@NonNull String description, LocalDate dueDate, String id) {
+    public Task(@NonNull String description, LocalDate dueDate, @NonNull String id) {
         this.description = description;
         this.dueDate = dueDate;
         this.isCompleted = false;
