@@ -15,7 +15,7 @@ public class TaskCli {
         taskManager = new TaskManager();
     }
 
-    public void displayCli() {
+    public void start() {
         while (true) {
             printMenu();
 
