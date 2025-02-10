@@ -3,23 +3,23 @@ package org.lesedibale.task_manager.task;
 import org.lesedibale.task_manager.persistence.FileStorage;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class TaskManager {
     private final List<Task> dataStore;
     private static long id;
+    private final FileStorage fileStorage;
 
 
     public TaskManager(FileStorage fileStorage) {
+        this.fileStorage = fileStorage;
         dataStore = fileStorage.load();
         id = 1;
     }
 
     public boolean addTask(String description, LocalDate dueDate) {
-        var task = new Task(description, String.valueOf(dueDate), String.valueOf(id++));
-        dataStore.add(task);
+        dataStore.add(new Task(description, String.valueOf(dueDate), String.valueOf(id++)));
+        fileStorage.save(dataStore);
 
         return true;
     }
@@ -29,7 +29,7 @@ public class TaskManager {
     }
 
     public boolean markCompleted(String taskId) {
-        return dataStore
+        var result = dataStore
                 .stream()
                 .filter(t -> t.getId().equalsIgnoreCase(taskId))
                 .findFirst()
@@ -38,10 +38,17 @@ public class TaskManager {
                     return true;
                 })
                 .orElse(false);
+
+        fileStorage.save(dataStore);
+
+        return result;
     }
 
     public boolean deleteTask(String taskId) {
-        return dataStore.removeIf(task -> task.getId().equalsIgnoreCase(taskId));
+        var result = dataStore.removeIf(task -> task.getId().equalsIgnoreCase(taskId));
+        fileStorage.save(dataStore);
+
+        return result;
     }
 
     public boolean contains(String taskId) {

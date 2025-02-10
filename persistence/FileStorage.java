@@ -31,8 +31,8 @@ public class FileStorage {
     public List<Task> load() {
         try {
             return mapper.readValue(filepath, new TypeReference<List<Task>>() {});
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (IOException ignored) {
             return new ArrayList<>();
         }
     }
