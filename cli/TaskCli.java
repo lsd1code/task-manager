@@ -43,10 +43,15 @@ public class TaskCli {
     }
 
     public void addNewTask() {
-        System.out.println("Add New Task");
+        System.out.println("Add New Task\n");
         var desc = getValue("Description:");
 
-        LocalDate validDate = null;
+        if(desc.isEmpty()) {
+            System.out.println("Task description cannot be empty");
+            return;
+        }
+
+        LocalDate validDate;
 
         try {
             var year = LocalDate.now().getYear();
@@ -108,11 +113,11 @@ public class TaskCli {
     }
 
     public void markTaskAsCompleted() {
-        var taskId = getValue("Enter Task ID of a Task you want to mark as completed:");
+        var taskId = getValue("Enter Task ID:");
         var exists = taskManager.contains(taskId);
 
         if (!exists) {
-            System.out.println("task not found");
+            System.out.println("Task " + taskId +" not found");
             return;
         }
 
@@ -125,12 +130,12 @@ public class TaskCli {
         var exists = taskManager.contains(taskId);
 
         if (!exists) {
-            System.out.println("task not found");
+            System.out.println("Task " + taskId +" not found");
             return;
         }
 
         taskManager.deleteTask(taskId);
-        System.out.println("Task Removed Successfully");
+        System.out.println("Task " + taskId + " Removed Successfully");
     }
 
     private void printMenu() {
