@@ -35,7 +35,7 @@ public class TaskCli {
                     System.out.println("""
                     Thanks for using our program <3
                     """);
-                    break;
+                    return;
                 }
             }
         }
@@ -48,19 +48,27 @@ public class TaskCli {
         LocalDate validDate = null;
 
         try {
-            var year = getInt("year: ");
-            var month = getInt("month: ");
-            var day = getInt("day: ");
+            var year = LocalDate.now().getYear();
+            var month = getInt("month (enter 0 for current month): ");
+            var day = getInt("day: (enter 0 for current day)");
 
-            if(year < 2025) {
-                throw new DateTimeException("Year cannot be less than 2025");
+            if(month == 0 && day == 0) {
+                validDate = LocalDate.now();
+            } else if (month < 1 && day < 1) {
+                validDate = LocalDate.of(year, month, day);
+            } else if (month > 1) {
+                validDate = LocalDate.of(year, month, LocalDate.now().getDayOfMonth());
+            } else if (day > 1) {
+                validDate = LocalDate.of(year, LocalDate.now().getMonth(), day);
+            } else {
+                validDate = LocalDate.of(year, month, day);
             }
-
-            validDate = LocalDate.of(year, month, day);
         } catch (InputMismatchException e) {
             System.out.println("Error: Enter a valid input");
+            return;
         } catch (DateTimeException e) {
             System.out.println("Error: enter a valid date");
+            return;
         }
 
         var task = taskManager.addTask(desc, validDate);
