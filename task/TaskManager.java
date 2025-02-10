@@ -1,22 +1,24 @@
 package org.lesedibale.task_manager.task;
 
+import org.lesedibale.task_manager.persistence.FileStorage;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class TaskManager {
-    private List<Task> dataStore;
+    private final List<Task> dataStore;
     private static long id;
 
 
-    public TaskManager() {
-        dataStore = new ArrayList<>();
+    public TaskManager(FileStorage fileStorage) {
+        dataStore = fileStorage.load();
         id = 1;
     }
 
     public boolean addTask(String description, LocalDate dueDate) {
-        var task = new Task(description, dueDate, String.valueOf(id++));
+        var task = new Task(description, String.valueOf(dueDate), String.valueOf(id++));
         dataStore.add(task);
 
         return true;

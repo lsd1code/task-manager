@@ -1,5 +1,6 @@
 package org.lesedibale.task_manager.cli;
 
+import org.lesedibale.task_manager.persistence.FileStorage;
 import org.lesedibale.task_manager.task.Task;
 import org.lesedibale.task_manager.task.TaskManager;
 
@@ -12,7 +13,7 @@ public class TaskCli {
     private final TaskManager taskManager;
 
     public TaskCli() {
-        taskManager = new TaskManager();
+        taskManager = new TaskManager(new FileStorage());
     }
 
     public void start() {
@@ -49,8 +50,8 @@ public class TaskCli {
 
         try {
             var year = LocalDate.now().getYear();
-            var month = getInt("month (enter 0 for current month): ");
-            var day = getInt("day: (enter 0 for current day)");
+            var month = getInt("month (enter 0 for current month):");
+            var day = getInt("day (enter 0 for current day):");
 
             if(month == 0 && day == 0) {
                 validDate = LocalDate.now();

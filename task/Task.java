@@ -1,22 +1,20 @@
 package org.lesedibale.task_manager.task;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor(force = true)
 public class Task {
     @NonNull private String id;
     @NonNull private String description;
-    private LocalDate dueDate;
+    private String dueDate;
     private boolean isCompleted;
 
-    public Task(@NonNull String description, LocalDate dueDate, @NonNull String id) {
+    public Task(@NonNull String description, String dueDate, @NonNull String id) {
         this.description = description;
         this.dueDate = dueDate;
         this.isCompleted = false;
